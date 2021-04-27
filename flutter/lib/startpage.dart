@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/serverinfo.dart';
-import 'package:myapp/serviceinfo.dart';
-import 'package:myapp/utils.dart';
+import 'serverinfo.dart';
+import 'serviceinfo.dart';
+import 'utils.dart';
 
 class StartPage extends StatelessWidget {
-  StartPage({Key key, this.title, this.serverInfo}) : super(key: key);
+  StartPage({Key? key, required this.title, required this.serverInfo}) : super(key: key);
 
   final String title;
   final Future<List<ServerInfo>> serverInfo;
@@ -27,7 +27,7 @@ class StartPage extends StatelessWidget {
                       if (snapshot.hasError)
                         return new Text('Error: ${snapshot.error}');
                       else
-                        return _buildGridView(context, snapshot.data);
+                        return _buildGridView(context, snapshot.data!);
                   }
                 })));
   }
@@ -54,9 +54,17 @@ class StartPage extends StatelessWidget {
 
     return serverInfoCells;
   }
-  
+
+  Color _getColorByServerStatus(ServerInfo info) {
+    if (info.running()) {
+      return Colors.teal[600]!;
+    } else {
+      return Colors.red[200]!;
+    }
+  }
+
   Container _getServerInfoCard(ServerInfo serverInfo) {
-      return new Container(
+    return new Container(
         width: 200.0,
         height: 300.0,
         child: Card(
@@ -129,13 +137,5 @@ class StartPage extends StatelessWidget {
       return TextStyle(fontStyle: FontStyle.italic);
     }
     return TextStyle();
-  }
-
-  Color _getColorByServerStatus(ServerInfo info) {
-    if (info.running()) {
-      return Colors.teal[600];
-    } else {
-      return Colors.red[200];
-    }
   }
 }

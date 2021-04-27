@@ -1,11 +1,11 @@
-import 'package:myapp/serverinfo.dart';
+import 'serverinfo.dart';
 import 'dart:js' as js;
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
 Future<List<ServerInfo>> fetchServerInfo() async {
-  final response = await http.get("http://localhost:8080/api");
+  final response = await http.get(Uri.parse("http://localhost:8080/api"));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
